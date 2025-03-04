@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="../components/hightchart/jquery.min.js"></script>
+		<script src="../components/hightchart/highcharts.js"></script>
+		<script src="../components/hightchart/modules/exporting.js"></script>
+
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+$(function () {
+	
+	$.ajax({
+		url:'statChartAction_getOnlineinfoData',
+		dataType:'json',
+		type:'get',
+		success:function(value){
+			$('#container').highcharts({
+		        title: {
+		            text: '系统访问压力图',
+		            x: -20 //center
+		        },
+		        subtitle: {
+		            text: '24小时的访问量',
+		            x: -20
+		        },
+		        xAxis: {
+		            categories: value.times
+		        },
+		        yAxis: {
+		            title: {
+		                text: '登录次数'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+		        tooltip: {
+		            valueSuffix: '次'
+		        },
+		        legend: {
+		            layout: 'vertical',
+		            align: 'right',
+		            verticalAlign: 'middle',
+		            borderWidth: 0
+		        },
+		        series: [{
+		            name: 'count',
+		            data: value.counts
+		        }]
+		    });
+		}
+	})
+	
+    
+});
+		</script>
+	</head>
+	<body>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
